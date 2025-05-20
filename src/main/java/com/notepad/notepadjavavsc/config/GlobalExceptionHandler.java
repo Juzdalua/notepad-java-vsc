@@ -1,0 +1,20 @@
+package com.notepad.notepadjavavsc.config;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<Map<String, Object>> handleIllegalState(IllegalStateException ex) {
+    Map<String, Object> error = new HashMap<>();
+    error.put("success", false);
+    error.put("message", ex.getMessage());
+    return ResponseEntity.badRequest().body(error);
+  }
+}

@@ -2,12 +2,12 @@ package com.notepad.notepadjavavsc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.notepad.notepadjavavsc.config.DotenvInitializer;
 
+@EnableJpaAuditing
 @SpringBootApplication
-@ComponentScan(basePackages = { "com.notepad.notepadjavavsc" })
 public class NotepadJavaVscApplication {
 
   public static void main(String[] args) {
