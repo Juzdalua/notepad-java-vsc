@@ -35,4 +35,10 @@ public class UserController {
 
     return ResponseEntity.ok(users);
   }
+
+  @PostMapping("/update")
+  public ResponseEntity<?> updateUser(@RequestBody UserDto userDto) {
+    userService.updateUserAge(userDto.getName(), userDto.getAge());
+    return ResponseEntity.ok().build();
+  }
 }

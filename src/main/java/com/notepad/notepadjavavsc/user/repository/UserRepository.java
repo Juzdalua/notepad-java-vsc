@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Optional<User> findByName(String name);
 
   @Modifying
-  @Query("UPDATE user SET user.age = :age WHERE user.name = :name")
+  @Query("UPDATE User u SET u.age = :age WHERE u.name = :name")
   int updateUserAgeByName(@Param("name") String name, @Param("age") int age);
 }

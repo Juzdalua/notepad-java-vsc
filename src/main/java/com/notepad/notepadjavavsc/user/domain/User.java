@@ -44,7 +44,16 @@ public class User {
     this.age = age;
   }
 
+  // 생성자 팩토리
   public static User of(String name, int age) {
     return new User(name, age);
+  }
+
+  public void changeAge(int age) {
+    this.age = age;
+  }
+
+  public void changeName(String name) {
+    this.name = name;
   }
 }

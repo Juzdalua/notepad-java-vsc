@@ -38,6 +38,11 @@ public class UserService {
 
   @Transactional
   public void updateUserAge(String name, int newAge) {
+    // 1.
+    User user = userRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("Invalid Name."));
+    user.changeAge(newAge);
+
+    // 2.
     userRepository.updateUserAgeByName(name, newAge);
   }
 }
