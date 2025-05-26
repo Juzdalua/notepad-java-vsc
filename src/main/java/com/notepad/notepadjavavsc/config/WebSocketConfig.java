@@ -33,6 +33,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
         System.out.println("MessageStr: " + payload);
 
         MessagePayloadDto jsonMessage = objectMapper.readValue(payload, MessagePayloadDto.class);
+        System.out.println("name:" + jsonMessage.getName() + " / age: " + jsonMessage.getAge());
+        System.out.println(String.format("name: %s / age: %d", jsonMessage.getName(), jsonMessage.getAge()));
 
         session.sendMessage(new TextMessage("Echo: " + payload));
       }
