@@ -1,5 +1,10 @@
 package com.notepad.notepadjavavsc.config;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.TextMessage;
@@ -18,6 +23,12 @@ import com.notepad.notepadjavavsc.common.dto.MessagePayloadDto;
 public class WebSocketConfig implements WebSocketConfigurer {
 
   private final ObjectMapper objectMapper = new ObjectMapper();
+  private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. MM. dd. a hh:mm:ss");
+  public static final String RESET = "\u001B[0m";
+  public static final String PURPLE = "\u001B[35m";
+  public static final String CYAN = "\u001B[36m";
+  private static final String YELLOW = "\u001B[33m";
+  public static final String GREEN = "\u001B[32m";
 
   @Override
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -26,17 +37,47 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
   @Bean
   public WebSocketHandler simpleWebSocketHandler() {
+
     return new TextWebSocketHandler() {
+
+      @Override
+      public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        SocketAddress remoteAddr = session.getRemoteAddress();
+        if (remoteAddr instanceof InetSocketAddress inetSocketAddress) {
+          String ip = inetSocketAddress.getAddress().getHostAddress();
+          int port = inetSocketAddress.getPort();
+
+          String time = formatter.format(LocalDateTime.now());
+
+          System.out.printf(
+              "%s[Java]%s  - %s%s%s  %s[WS]%s 연결됨 - %s:%d%n",
+              PURPLE, RESET,
+              CYAN, time, RESET,
+              YELLOW, RESET,
+              ip, port);
+        }
+      }
+
       @Override
       protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         System.out.println("MessageStr: " + payload);
 
-        MessagePayloadDto jsonMessage = objectMapper.readValue(payload, MessagePayloadDto.class);
-        System.out.println("name:" + jsonMessage.getName() + " / age: " + jsonMessage.getAge());
-        System.out.println(String.format("name: %s / age: %d", jsonMessage.getName(), jsonMessage.getAge()));
+        try {
+          MessagePayloadDto jsonMessage = objectMapper.readValue(payload, MessagePayloadDto.class);
+          if (jsonMessage == null) {
+            session.sendMessage(new TextMessage("❌ Invalid Message Type"));
+            return;
+          }
 
-        session.sendMessage(new TextMessage("Echo: " + payload));
+          System.out.println(String.format("name: %s / age: %d", jsonMessage.getName(), jsonMessage.getAge()));
+          session.sendMessage(new TextMessage("Echo: " + payload));
+
+        } catch (Exception e) {
+          e.printStackTrace();
+          session.sendMessage(new TextMessage("❌ JSON Parse Error: " + e.getMessage()));
+        }
+
       }
     };
   }
