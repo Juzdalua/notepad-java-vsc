@@ -50,7 +50,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
           String time = formatter.format(LocalDateTime.now());
 
           System.out.printf(
-              "%s[Java]%s  - %s%s%s  %s[WS]%s 연결됨 - %s:%d%n",
+              "%s[Java]%s  - %s%s%s  %s[WS]%s [Connect] - %s:%d%n",
               PURPLE, RESET,
               CYAN, time, RESET,
               YELLOW, RESET,
