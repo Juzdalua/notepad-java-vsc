@@ -1,4 +1,4 @@
-package com.notepad.notepadjavavsc.config;
+package com.notepad.notepadjavavsc.global.logger;
 
 public class CustomLogger {
   private static final String RESET = "\u001B[0m";

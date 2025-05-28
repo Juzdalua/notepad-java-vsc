@@ -1,4 +1,4 @@
-package com.notepad.notepadjavavsc.config;
+package com.notepad.notepadjavavsc.global.config;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -32,7 +32,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
   public static final String GREEN = "\u001B[32m";
 
   @Override
-  public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+  public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry registry) {
     registry.addHandler(simpleWebSocketHandler(), "/").setAllowedOrigins("*");
   }
 

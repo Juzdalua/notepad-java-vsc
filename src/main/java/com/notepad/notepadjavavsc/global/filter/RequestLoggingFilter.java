@@ -1,4 +1,4 @@
-package com.notepad.notepadjavavsc.config;
+package com.notepad.notepadjavavsc.global.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

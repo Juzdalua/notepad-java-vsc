@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import com.notepad.notepadjavavsc.config.DotenvInitializer;
+import com.notepad.notepadjavavsc.global.config.DotenvInitializer;
 
 @EnableJpaAuditing
 @SpringBootApplication

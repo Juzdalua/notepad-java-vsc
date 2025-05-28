@@ -1,4 +1,4 @@
-package com.notepad.notepadjavavsc.config;
+package com.notepad.notepadjavavsc.global.exception;
 
 import java.util.HashMap;
 import java.util.Map;

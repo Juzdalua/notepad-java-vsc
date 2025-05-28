@@ -1,4 +1,4 @@
-package com.notepad.notepadjavavsc.config;
+package com.notepad.notepadjavavsc.global.config;
 
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,7 +14,12 @@ public class DotenvInitializer implements ApplicationContextInitializer<Configur
 
   @Override
   public void initialize(@NonNull ConfigurableApplicationContext context) {
+
+    // String projectRoot = System.getProperty("user.dir");
+    // File envFile = new File(projectRoot, ".env");
     File envFile = new File(".env");
+    System.out.println("123"+envFile);
+
     if (!envFile.exists()) {
       throw new RuntimeException(".env 파일이 없습니다.");
     }
@@ -27,6 +32,8 @@ public class DotenvInitializer implements ApplicationContextInitializer<Configur
             String key = parts[0].trim();
             String value = parts[1].trim();
             System.setProperty(key, value);
+
+            System.out.println(key+"/"+value);
           });
     } catch (IOException e) {
       throw new RuntimeException(".env 파일을 읽는 중 오류 발생", e);
