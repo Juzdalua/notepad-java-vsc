@@ -99,27 +99,38 @@ src
                     ├── common
                     │   └── dto
                     │       └── MessagePayloadDto.java
-                    ├── config
-                    │   ├── CustomLogger.java
-                    │   ├── DotenInitializer.java
-                    │   ├── GlobalExceptionHandler.java
-                    │   ├── RequestLoggingFilter.java
-                    │   └── WebSocketConfig.java
+                    │
+                    ├── global
+                    │   ├── config
+                    │   │   └── WebSocketConfig.java
+                    │   ├── exception
+                    │   │   └── GlobalExceptionHandler.java
+                    │   ├── filter
+                    │   │   └── RequestLoggingFilter.java
+                    │   ├── jwt
+                    │   │
+                    │   └── logger
+                    │       ├── CustomLogger.java
+                    │       └── DotenvInitializer.java
+                    │
                     ├── hello
                     │   └── controller
                     │       └── HelloController.java
-                    └── user
-                        ├── controller
-                        │   └── UserController.java
-                        ├── domain
-                        │   └── User.java
-                        ├── dto
-                        │   └── UserDto.java
-                        ├── repository
-                        │   └── UserRepository.java
-                        └── service
-                            └── UserService.java
+                    │
+                    ├── user
+                    │   ├── controller
+                    │   │   └── UserController.java
+                    │   ├── domain
+                    │   │   └── User.java
+                    │   ├── dto
+                    │   │   └── UserDto.java
+                    │   ├── repository
+                    │   │   └── UserRepository.java
+                    │   └── service
+                    │       └── UserService.java
+                    │
                     └── NotepadJavaVscApplication.java
+
 ```
 1. General convention
 src/java/com
@@ -131,9 +142,9 @@ ex) /notepadjavavsc
 ex) NotepadJavaVscApplication.java
 
 4. Folder Name Convention <br/>
-config -> global config object <br/>
-common -> global object <br/>
-user, hello -> local object <br/>
+global -> global object <br/>
+common -> global util object <br/>
+user, hello, ... -> local object <br/>
 
 5. Object Folder Name Convention <br/>
 controller -> Accept APIs <br/>
