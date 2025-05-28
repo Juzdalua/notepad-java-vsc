@@ -1,59 +1,78 @@
 package com.notepad.notepadjavavsc.user.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 만들어줌
-@EntityListeners(AuditingEntityListener.class) // createdAt, updatedAt을 위해 감시
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+@EntityListeners(AuditingEntityListener.class)
 public class User {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private String name;
+  @Column(unique = true, nullable = false)
+  private String email;
 
   @Column(nullable = false)
-  private int age;
+  private String password;
 
-  @CreatedDate
-  @Column(name = "createdAt", updatable = false)
-  private LocalDateTime createdAt;
+  @Column(nullable = false)
+  private LocalDate birthday;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Gender gender;
+
+  @Column(name = "accept_terms", nullable = false)
+  private boolean acceptTerms;
+
+  @Builder.Default
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private UserRole role = UserRole.USER;
 
   @LastModifiedDate
-  @Column(name = "updatedAt")
+  @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  public User(String name, int age) {
-    this.name = name;
-    this.age = age;
+  @CreatedDate
+  @Column(name = "created_at", updatable = false)
+  private LocalDateTime createdAt;
+
+  @PrePersist
+  protected void onCreate() {
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
   }
 
-  // 생성자 팩토리
-  public static User of(String name, int age) {
-    return new User(name, age);
+  @PreUpdate
+  protected void onUpdate() {
+    this.updatedAt = LocalDateTime.now();
   }
 
-  public void changeAge(int age) {
-    this.age = age;
+  public enum Gender {
+    male, female, other;
+
+    @Override
+    public String toString() {
+      return name().toLowerCase();
+    }
   }
 
-  public void changeName(String name) {
-    this.name = name;
+  public enum UserRole {
+    USER,
+    ADMIN
   }
 }

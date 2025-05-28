@@ -10,9 +10,10 @@ import org.springframework.data.repository.query.Param;
 import com.notepad.notepadjavavsc.user.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByName(String name);
+  Optional<User> findByEmail(String email);
 
-  @Modifying
-  @Query("UPDATE User u SET u.age = :age WHERE u.name = :name")
-  int updateUserAgeByName(@Param("name") String name, @Param("age") int age);
+  boolean existsByEmail(String email);
+  // @Modifying
+  // @Query("UPDATE User u SET u.age = :age WHERE u.name = :name")
+  // int updateUserAgeByName(@Param("name") String name, @Param("age") int age);
 }

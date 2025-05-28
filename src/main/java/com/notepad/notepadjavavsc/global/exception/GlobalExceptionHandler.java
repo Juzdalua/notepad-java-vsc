@@ -20,6 +20,14 @@ public class GlobalExceptionHandler {
     return ResponseEntity.badRequest().body(error);
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
+    Map<String, Object> error = new HashMap<>();
+    error.put("success", false);
+    error.put("message", ex.getMessage());
+    return ResponseEntity.badRequest().body(error);
+  }
+
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   public ResponseEntity<Map<String, Object>> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
     Map<String, Object> error = new HashMap<>();
