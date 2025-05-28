@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
@@ -27,7 +28,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
   public static final String RESET = "\u001B[0m";
   public static final String PURPLE = "\u001B[35m";
   public static final String CYAN = "\u001B[36m";
-  private static final String YELLOW = "\u001B[33m";
+  public static final String YELLOW = "\u001B[33m";
   public static final String GREEN = "\u001B[32m";
 
   @Override
@@ -41,7 +42,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     return new TextWebSocketHandler() {
 
       @Override
-      public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+      public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception {
         SocketAddress remoteAddr = session.getRemoteAddress();
         if (remoteAddr instanceof InetSocketAddress inetSocketAddress) {
           String ip = inetSocketAddress.getAddress().getHostAddress();
@@ -59,7 +60,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
       }
 
       @Override
-      protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+      protected void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message)
+          throws Exception {
         String payload = message.getPayload();
         System.out.println("MessageStr: " + payload);
 
