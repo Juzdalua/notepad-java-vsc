@@ -9,11 +9,12 @@ import org.springframework.data.repository.query.Param;
 
 import com.notepad.notepadjavavsc.user.domain.User;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
   Optional<User> findByEmail(String email);
 
   boolean existsByEmail(String email);
-  // @Modifying
-  // @Query("UPDATE User u SET u.age = :age WHERE u.name = :name")
-  // int updateUserAgeByName(@Param("name") String name, @Param("age") int age);
+
+  @Modifying
+  @Query("UPDATE User u SET u.email = :email WHERE u.id = :id") // User는 클래스 객체명
+  int updateUserAgeByNameFromJpql(@Param("email") String email, @Param("id") int id);
 }
