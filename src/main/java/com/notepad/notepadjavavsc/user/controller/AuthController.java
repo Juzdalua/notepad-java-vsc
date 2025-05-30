@@ -22,9 +22,7 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<ApiResponse<LoginResponse>> signup(@RequestBody @Valid SignupRequest request) {
 
-    System.out.println("SIGN1");
     LoginResponse response = authService.signup(request);
-    System.out.println("SIGN2");
     return ResponseEntity.ok(new ApiResponse<>(response));
   }
 
