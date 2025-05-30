@@ -14,7 +14,7 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-  @Value("${jwt.secret}")
+  @Value("${jwt.secret}") // applicatoin.properties의 변수값
   private String secretKey;
 
   @Value("${jwt.expiration}")
@@ -22,7 +22,7 @@ public class JwtProvider {
 
   private Key key;
 
-  @PostConstruct
+  @PostConstruct // 빈에 등록 후 설정값을 실행하기 위해 사용
   protected void init() {
     byte[] keyBytes = Base64.getEncoder().encode(secretKey.getBytes());
     this.key = Keys.hmacShaKeyFor(keyBytes);
