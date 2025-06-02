@@ -59,23 +59,17 @@ Table: user
 -- `user`.`user` definition
 
 CREATE TABLE `user` (
-
-`id` bigint NOT NULL AUTO_INCREMENT,
-
-`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-
-`age` int unsigned DEFAULT NULL,
-
-`updatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
-
-`createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
-
-`created_at` datetime(6) DEFAULT NULL,
-
-`updated_at` datetime(6) DEFAULT NULL,
-
-PRIMARY KEY (`id`)
-
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `gender` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'male',
+  `accept_terms` tinyint(1) NOT NULL DEFAULT '1',
+  `role` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `NewTable_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 

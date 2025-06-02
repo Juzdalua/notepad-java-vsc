@@ -21,7 +21,7 @@ public class UserController {
   @GetMapping("/me")
   public ResponseEntity<UserResponse> getMyInfo(Authentication authentication) {
     UserResponse user = (UserResponse) authentication.getPrincipal();
-
+    userService.getUserInfoByEmail(user.getEmail());
     return ResponseEntity.ok(user);
   }
 }

@@ -13,7 +13,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
   // private final JPAQueryFactory queryFactory;
 
   @Override
-  public long updateUserAgeByNameFromQueryDsl(String name, int age) {
+  public long updateUserAgeByEmailFromQueryDsl(String email) {
     return 1;
 
     // return queryFactory
