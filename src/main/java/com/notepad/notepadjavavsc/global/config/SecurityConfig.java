@@ -42,7 +42,8 @@ public class SecurityConfig {
             .requestMatchers(allowedEndPoints).permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .httpBasic(Customizer.withDefaults())
+        // .httpBasic(Customizer.withDefaults())
+        .httpBasic(httpBasic -> httpBasic.disable())
         .formLogin(login -> login.disable());
 
     return http.build();
@@ -51,13 +52,17 @@ public class SecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();
+
     config.setAllowedOriginPatterns(List.of("*"));
-    config.setAllowedMethods(List.of("*"));
+    // config.setAllowedOrigins(List.of("http://192.168.1.13:3000"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     config.setAllowedHeaders(List.of("*"));
+    config.setExposedHeaders(List.of("Authorization"));
     config.setAllowCredentials(false);
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);
     return source;
   }
+
 }
